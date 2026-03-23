@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace StellarWP\LicensingApiClientWordPress\Exceptions;
+namespace LiquidWeb\LicensingApiClientWordPress\Exceptions;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use RuntimeException;

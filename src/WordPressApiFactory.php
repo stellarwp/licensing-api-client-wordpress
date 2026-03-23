@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace StellarWP\LicensingApiClientWordPress;
+namespace LiquidWeb\LicensingApiClientWordPress;
 
+use LiquidWeb\LicensingApiClient\Api;
+use LiquidWeb\LicensingApiClient\ApiBuilder;
+use LiquidWeb\LicensingApiClient\Config;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use StellarWP\LicensingApiClient\Api;
-use StellarWP\LicensingApiClient\ApiBuilder;
-use StellarWP\LicensingApiClient\Config;
 
 /**
  * Builds the core licensing API client with WordPress-compatible transport dependencies.

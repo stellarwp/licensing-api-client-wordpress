@@ -49,11 +49,11 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use StellarWP\LicensingApiClient\Api;
-use StellarWP\LicensingApiClient\Config;
-use StellarWP\LicensingApiClient\Contracts\LicensingClientInterface;
-use StellarWP\LicensingApiClient\Http\RequestExecutor;
-use StellarWP\LicensingApiClientWordPress\Http\WordPressHttpClient;
+use LiquidWeb\LicensingApiClient\Api;
+use LiquidWeb\LicensingApiClient\Config;
+use LiquidWeb\LicensingApiClient\Contracts\LicensingClientInterface;
+use LiquidWeb\LicensingApiClient\Http\RequestExecutor;
+use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
 use lucatume\DI52\ServiceProvider;
 
 final class LicensingApiProvider extends ServiceProvider
@@ -123,9 +123,9 @@ For a public or unauthenticated client without a Container:
 <?php declare(strict_types=1);
 
 use Nyholm\Psr7\Factory\Psr17Factory;
-use StellarWP\LicensingApiClient\Config;
-use StellarWP\LicensingApiClientWordPress\Http\WordPressHttpClient;
-use StellarWP\LicensingApiClientWordPress\WordPressApiFactory;
+use LiquidWeb\LicensingApiClient\Config;
+use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
+use LiquidWeb\LicensingApiClientWordPress\WordPressApiFactory;
 
 $psr17 = new Psr17Factory();
 
@@ -146,9 +146,9 @@ For a trusted source with a configured token:
 <?php declare(strict_types=1);
 
 use Nyholm\Psr7\Factory\Psr17Factory;
-use StellarWP\LicensingApiClient\Config;
-use StellarWP\LicensingApiClientWordPress\Http\WordPressHttpClient;
-use StellarWP\LicensingApiClientWordPress\WordPressApiFactory;
+use LiquidWeb\LicensingApiClient\Config;
+use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
+use LiquidWeb\LicensingApiClientWordPress\WordPressApiFactory;
 
 $psr17 = new Psr17Factory();
 
