@@ -52,6 +52,9 @@ use Psr\Http\Message\StreamFactoryInterface;
 use LiquidWeb\LicensingApiClient\Api;
 use LiquidWeb\LicensingApiClient\Config;
 use LiquidWeb\LicensingApiClient\Contracts\LicensingClientInterface;
+use LiquidWeb\LicensingApiClient\Http\ApiVersion;
+use LiquidWeb\LicensingApiClient\Http\AuthContext;
+use LiquidWeb\LicensingApiClient\Http\AuthState;
 use LiquidWeb\LicensingApiClient\Http\RequestExecutor;
 use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
 use lucatume\DI52\ServiceProvider;
@@ -60,8 +63,8 @@ final class LicensingApiProvider extends ServiceProvider
 {
 	public function register(): void
 	{
-		$this->container->singleton(WordPressHttpClient::class, WordPressHttpClient::class);
-		$this->container->singleton(Psr17Factory::class, Psr17Factory::class);
+		$this->container->singleton(WordPressHttpClient::class);
+		$this->container->singleton(Psr17Factory::class);
 
 		$this->container->when(RequestExecutor::class)
 		                ->needs(ClientInterface::class)
@@ -88,12 +91,25 @@ final class LicensingApiProvider extends ServiceProvider
 			}
 		);
 
-		$this->container->bind(LicensingClientInterface::class, Api::class);
+		$this->container->singleton(
+			AuthState::class,
+			static fn( $c ): AuthState => new AuthState(
+				new AuthContext(),
+				$c->get(Config::class)->configuredToken
+			)
+		);
+
+		$this->container->singleton(
+			ApiVersion::class,
+			static fn(): ApiVersion => ApiVersion::default()
+		);
+
+		$this->container->singleton(LicensingClientInterface::class, Api::class);
 	}
 }
 ```
 
-That lets you resolve the fully-wired core client from the container:
+That lets you resolve the fully-wired core client from the container. The important detail is that `AuthState` is built from `Config::configuredToken`, so your configured token only lives in one place:
 
 ```php
 $api = $container->get(LicensingClientInterface::class);

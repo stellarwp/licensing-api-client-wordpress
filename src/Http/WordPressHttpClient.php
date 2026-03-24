@@ -7,6 +7,7 @@ use Nyholm\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Traversable;
 use WP_Error;
 
 /**
@@ -63,12 +64,39 @@ final class WordPressHttpClient implements ClientInterface
 	 * @return array<string, string>
 	 */
 	private function normalizeResponseHeaders(array $response): array {
-		$headers = [];
+		$rawHeaders = $this->normalizeRetrievedHeaders(wp_remote_retrieve_headers($response));
+		$headers    = [];
 
-		foreach ((array) wp_remote_retrieve_headers($response) as $name => $value) {
-			$headers[(string) $name] = is_array($value) ? implode(', ', $value) : (string) $value;
+		foreach ($rawHeaders as $name => $value) {
+			$headers[ (string) $name ] = is_array($value) ? implode(', ', $value) : (string) $value;
 		}
 
 		return $headers;
+	}
+
+	/**
+	 * @phpstan-param mixed $headers
+	 *
+	 * @return iterable<array-key, mixed>
+	 */
+	private function normalizeRetrievedHeaders($headers): iterable {
+		if (is_array($headers)) {
+			return $headers;
+		}
+
+		// Likely an implementation of WpOrg\Requests\Utility\CaseInsensitiveDictionary.
+		if (is_object($headers) && method_exists($headers, 'getAll')) {
+			$all = $headers->getAll();
+
+			if (is_array($all)) {
+				return $all;
+			}
+		}
+
+		if ($headers instanceof Traversable) {
+			return $headers;
+		}
+
+		return [];
 	}
 }
