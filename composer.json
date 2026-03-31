@@ -9,7 +9,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "stellarwp/licensing-api-client": "^0.8",
+        "stellarwp/licensing-api-client": "^0.9",
         "nyholm/psr7": "^1.8"
     },
     "autoload": {
@@ -19,7 +19,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.8.x-dev"
+            "dev-main": "0.9.x-dev"
         }
     }
 }
